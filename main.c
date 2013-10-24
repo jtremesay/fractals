@@ -13,7 +13,7 @@ int main(int argc, char const * argv[])
 
     float zoomScale = 0.001f;
     for (unsigned int i = 0; i < 10; ++i) {
-        DATA32 * buffer = (int *) imlib_image_get_data();
+        DATA32 * buffer = imlib_image_get_data();
         mandelbrot(buffer, size, size, 0.0f, 0.0f, zoomScale);
         imlib_image_put_back_data(buffer);
 
