@@ -1,7 +1,7 @@
 set(LIBS
     ${SFML_LIBRARIES})
 
-    set(SRCS
+set(SRCS
     src/mandelbrot.cpp)
 
 include_directories("includes")

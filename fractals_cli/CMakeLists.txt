@@ -1,5 +1,4 @@
 set(LIBS
-    ${IMLIB2_LIBRARIES}
     ${SFML_LIBRARIES}
     Fractals)
 
