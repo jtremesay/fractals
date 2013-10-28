@@ -5,7 +5,7 @@ project(fractals)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/CMakeTests)
 
 find_package(Imlib2 REQUIRED)
-find_package(SFML 2 REQUIRED system window graphics network audio)
+find_package(SFML 2 REQUIRED graphics)
 
 include(FindOpenMP OPTIONAL)
 if(OPENMP_FOUND)
