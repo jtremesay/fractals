@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "mandelbrot.h"
+#include <Imlib2.h>
+#include <fractals/mandelbrot.h>
 
 static int size = 2048;
 

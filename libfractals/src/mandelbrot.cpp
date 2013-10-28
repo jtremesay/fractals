@@ -1,11 +1,13 @@
-#include "mandelbrot.h"
+#include "fractals/mandelbrot.h"
 #include <math.h>
 #include <stdlib.h>
 #include <stdio.h>
 
 #ifdef _OPENMP
-#include <omp.h>
-#endif
+#   include <omp.h>
+#endif // _OPENMP
+
+#include "fractals/utils.h"
 
 void mandelbrot(DATA32 * buffer, int width, int height, float centerX, float centerY, float scaleFactor)
 {

@@ -1,8 +1,6 @@
 #ifndef FRACTALS_UTILS_H
 #define FRACTALS_UTILS_H
 
-#include <Imlib2.h>
-
 inline int rgb(char r, char g, char b);
 inline int cmy(char c, char m, char y);
 
