@@ -44,7 +44,7 @@ void main()
                             (4.0 * sin_nic),
                             1.0);
     } else {
-        output_color = vec4(1.0, 0.0, 0.0, 1.0);
+        output_color = vec4(0.0, 0.0, 0.0, 1.0);
     }
     
     vec4 pixel = texture2D(texture, gl_TexCoord[0].xy);
