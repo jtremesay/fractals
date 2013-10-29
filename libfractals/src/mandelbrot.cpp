@@ -8,21 +8,12 @@
 Mandelbrot::Mandelbrot() :
     m_scaleFactor(0.0f),
     m_center(sf::Vector2f(0.0f, 0.0f)),
-    m_colors(new sf::Color[256])
-{        
-    for (unsigned int n = 0; n < 42; ++n) {
-        m_colors[n] = sf::Color(255, n * 6, 0);
-        m_colors[n + 42] = sf::Color((255 - n * 6), 255, 0);
-        m_colors[n + 84] = sf::Color(0, 255, n * 6);        
-        m_colors[n + 126] = sf::Color(0, (255 - n * 6), 255);
-        m_colors[n + 168] = sf::Color(n * 6, 0, 255);       
-        m_colors[n + 210] = sf::Color(255, 0, (255 - n * 6));
-    }   
+    m_maxIters(64)
+{
 }
 
 Mandelbrot::~Mandelbrot()
 {
-    delete[] m_colors;
 }
 
 float Mandelbrot::getScaleFactor() const
@@ -45,6 +36,16 @@ void Mandelbrot::setCenter(const sf::Vector2f & center)
     m_center = center;
 }
 
+unsigned int Mandelbrot::getMaxIters() const
+{
+    return m_maxIters;
+}
+
+void Mandelbrot::setMaxIters(unsigned int maxIters)
+{
+    m_maxIters = maxIters;
+}
+
 void Mandelbrot::drawToImage(sf::Image & image) const
 {
     const sf::Vector2u & targetSize = image.getSize();
@@ -60,21 +61,25 @@ void Mandelbrot::drawToImage(sf::Image & image) const
                                           (y - halfSize.y) / halfSize.y / m_scaleFactor);
             sf::Vector2f z = sf::Vector2f(0.0f, 0.0f);
             
-            unsigned int color = 0;
+            unsigned int iter = 0;
             do {
-                ++color;
+                ++iter;
                 sf::Vector2f n = sf::Vector2f(z.x * z.x - z.y * z.y + c.x,
                                               2 * z.x * z.y + c.y);
                 z = n;
                 const float d = n.x * n.x + n.y * n.y;
-                if (d > escapeValue || color > 256) {
+                if (d > escapeValue || iter > m_maxIters) {
                     break;
                 }
                 
             } while (true);
             
-            if (color <= 256) {
-                image.setPixel(x, y, m_colors[color]);
+            if (iter <= m_maxIters) {
+                const float nic = (float(iter) - (logf(logf(sqrt((z.x * z.x) + (z.y * z.y)))) / logf(2.0))) / float(m_maxIters);
+                const float sin_nic = sinf(nic);                
+                image.setPixel(x, y, sf::Color((0.3f * sin_nic) * 255, 
+                                               (1.0f * sin_nic) * 255,
+                                               (4.0f * sin_nic) * 255));
             } else {
                 image.setPixel(x, y, sf::Color::Black);
             }

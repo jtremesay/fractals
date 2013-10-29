@@ -8,7 +8,7 @@ class Mandelbrot
 private:
     float m_scaleFactor;
     sf::Vector2f m_center;
-    sf::Color * m_colors;
+    unsigned int m_maxIters;
     
 public:
     Mandelbrot();
@@ -19,6 +19,9 @@ public:
     
     const sf::Vector2f & getCenter() const;
     void setCenter(const sf::Vector2f & center);
+    
+    unsigned int getMaxIters() const;
+    void setMaxIters(unsigned int maxIters);
     
     void drawToImage(sf::Image & image) const;
 };
