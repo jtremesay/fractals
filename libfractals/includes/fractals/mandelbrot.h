@@ -9,6 +9,7 @@ private:
     float m_scaleFactor;
     sf::Vector2f m_center;
     unsigned int m_maxIters;
+    float m_ratio;
     sf::Shader m_shader;
     
 public:
@@ -24,6 +25,9 @@ public:
     
     unsigned int getMaxIters() const;
     void setMaxIters(unsigned int maxIters);
+    
+    float getRatio() const;
+    void setRatio(float ratio);
     
     const sf::Shader & getShader() const;
 };
