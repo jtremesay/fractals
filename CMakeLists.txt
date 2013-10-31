@@ -11,3 +11,4 @@ set(CMAKE_CXX_FLAGS
 
 add_subdirectory(libfractals)
 add_subdirectory(fractals_cli)
+add_subdirectory(fractals_gui)
