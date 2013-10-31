@@ -1,9 +1,4 @@
 #include "fractals/mandelbrot.h"
-#include <cmath>
-
-#ifdef _OPENMP
-#   include <omp.h>
-#endif // _OPENMP
 
 static const char vertex_shader[] = R"SHADER(
 void main()
