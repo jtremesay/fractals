@@ -1,3 +1,4 @@
+#include <iostream>
 #include <cstdlib>
 
 #include <SFML/Window.hpp>
@@ -31,6 +32,46 @@ int main(int argc, char const * argv[])
                 window.close();
             } else if (event.type == sf::Event::Resized) {
                 mandelbrot.setRatio(static_cast<float>(event.size.width) / static_cast<float>(event.size.height));
+            } else if (event.type == sf::Event::MouseWheelMoved) {
+                if (event.mouseWheel.delta > 0) {
+                    mandelbrot.scale(0.9f);
+                } else {
+                    mandelbrot.scale(1.1f);
+                }
+            } else if (event.type == sf::Event::KeyPressed) {
+                if (event.key.code == sf::Keyboard::Left) {
+                    sf::Vector2f center = mandelbrot.getCenter();
+                    float scale = mandelbrot.getScaleFactor();
+                    center.x += 0.05f * scale;
+                    mandelbrot.setCenter(center);
+                } else if (event.key.code == sf::Keyboard::Right) {
+                    sf::Vector2f center = mandelbrot.getCenter();
+                    float scale = mandelbrot.getScaleFactor();
+                    center.x -= 0.05f * scale;
+                    mandelbrot.setCenter(center);
+                } else if (event.key.code == sf::Keyboard::Up) {
+                    sf::Vector2f center = mandelbrot.getCenter();
+                    float scale = mandelbrot.getScaleFactor();
+                    center.y += 0.05f * scale;
+                    mandelbrot.setCenter(center);
+                } else if (event.key.code == sf::Keyboard::Down) {
+                    sf::Vector2f center = mandelbrot.getCenter();
+                    float scale = mandelbrot.getScaleFactor();
+                    center.y -= 0.05f * scale;
+                    mandelbrot.setCenter(center);
+                } else if (event.key.code == sf::Keyboard::A) {
+                    unsigned int iter = mandelbrot.getMaxIters();
+                    if (iter < 1024) {
+                        ++iter;
+                        mandelbrot.setMaxIters(iter);
+                    }
+                } else if (event.key.code == sf::Keyboard::Z) {
+                    unsigned int iter = mandelbrot.getMaxIters();
+                    if (iter > 0) {                        
+                        --iter;
+                        mandelbrot.setMaxIters(iter);
+                    }
+                }
             }
         }
         
