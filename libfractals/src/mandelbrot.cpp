@@ -19,18 +19,19 @@ uniform sampler2D texture;
 uniform float m_scaleFactor;
 uniform float m_maxIters;
 uniform vec2 m_center;
+uniform vec2 m_ratio;
 
 void main()
 {
-    vec2 c = (gl_TexCoord[0].xy - 0.5) / 1.0 * m_scaleFactor - m_center;
+    vec2 c = (gl_TexCoord[0].xy - 0.5) * m_ratio * m_scaleFactor - m_center;
     vec2 z = c;
     
     float iter = 0.0;
     vec4 output_color;
     do {
         iter += 1.0;
-        z = vec2((z.x * z.x - z.y * z.y) + c.x,
-                 (z.y * z.x + z.x * z.y) + c.y);
+        z = vec2((z.x * z.x - z.y * z.y),
+                 (2.0 * z.x * z.y)) + c;
         if ((dot(z, z) > 4.0) || iter > m_maxIters) {
             break;
         }  
@@ -59,6 +60,7 @@ Mandelbrot::Mandelbrot()
     this->setScaleFactor(1.0f);
     this->setCenter(sf::Vector2f(0.0f, 0.0f));
     this->setMaxIters(64);
+    this->setRatio(1.0f);
 }
 
 Mandelbrot::~Mandelbrot()
@@ -103,6 +105,18 @@ void Mandelbrot::setMaxIters(unsigned int maxIters)
     m_maxIters = maxIters;
     
     m_shader.setParameter("m_maxIters", static_cast<float>(m_maxIters));
+}
+
+float Mandelbrot::getRatio() const
+{
+    return m_ratio;
+}
+
+void Mandelbrot::setRatio(float ratio)
+{
+    m_ratio = ratio;
+    
+    m_shader.setParameter("m_ratio", m_ratio, 1.0);
 }
 
 const sf::Shader & Mandelbrot::getShader() const
