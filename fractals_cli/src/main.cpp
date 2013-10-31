@@ -12,21 +12,32 @@ int main(int argc, char const * argv[])
 {
     char nameBuffer[256];
     
-    sf::Image image;
-    image.create(size, size);
+    sf::RenderTexture renderTexture;
+    renderTexture.create(size, size);
     
-    Mandelbrot mandelbrot = Mandelbrot();
-    mandelbrot.setCenter(sf::Vector2f(-0.1f, 0.0f));
-    mandelbrot.setScaleFactor(0.4f);
-    for (unsigned int i = 0; i < 10; ++i) {        
-        snprintf(nameBuffer, sizeof(nameBuffer), "mandelbrot_%03u.png", i);
+    sf::Image blankImage;
+    blankImage.create(1, 1, sf::Color::White);
+    
+    sf::Texture blankTexture;
+    blankTexture.loadFromImage(blankImage);
+    
+    sf::Sprite blankSprite;
+    blankSprite.setTexture(blankTexture);
+    blankSprite.setPosition(0, 0);
+    blankSprite.setScale(size, size);
+    
+    Mandelbrot mandelbrot;
+    mandelbrot.setCenter(sf::Vector2f(0.0f, 0.0f));
+    mandelbrot.setScaleFactor(2.0f);
+    for (unsigned int i = 0; i < 1; ++i) {
+        renderTexture.clear();
+        renderTexture.draw(blankSprite, &mandelbrot.getShader());
+        renderTexture.display();
         
-        mandelbrot.drawToImage(image);
-        image.saveToFile(nameBuffer);
+        snprintf(nameBuffer, sizeof(nameBuffer), "mandelbrot_gpu_%03u.png", i);
+        renderTexture.getTexture().copyToImage().saveToFile(nameBuffer);
         
-        float scaleFactor = mandelbrot.getScaleFactor();
-        scaleFactor *= 1.1f;
-        mandelbrot.setScaleFactor(scaleFactor);
+        mandelbrot.scale(0.9);
     }
 
     return EXIT_SUCCESS;

@@ -6,12 +6,8 @@ set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR}/CMakeTests)
 
 find_package(SFML 2 REQUIRED graphics)
 
-include(FindOpenMP OPTIONAL)
-if(OPENMP_FOUND)
-    message("OpenMP parallelization enabled")
-    add_definitions("${OpenMP_C_FLAGS}")
-    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${OpenMP_CXX_FLAGS}")
-endif()
+set(CMAKE_CXX_FLAGS
+    "${CMAKE_CXX_FLAGS} -std=c++11")
 
 add_subdirectory(libfractals)
 add_subdirectory(fractals_cli)
