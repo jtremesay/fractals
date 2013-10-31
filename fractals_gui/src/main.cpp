@@ -22,12 +22,15 @@ int main(int argc, char const * argv[])
     Mandelbrot mandelbrot;
     mandelbrot.setCenter(sf::Vector2f(0.0f, 0.0f));
     mandelbrot.setScaleFactor(2.0f);
+    mandelbrot.setRatio(static_cast<float>(window.getSize().x) / static_cast<float>(window.getSize().y));
     
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed) {
                 window.close();
+            } else if (event.type == sf::Event::Resized) {
+                mandelbrot.setRatio(static_cast<float>(event.size.width) / static_cast<float>(event.size.height));
             }
         }
         
