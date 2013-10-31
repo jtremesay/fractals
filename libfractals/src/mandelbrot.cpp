@@ -17,18 +17,18 @@ void main()
 static const char fragment_shader[] = R"SHADER(
 uniform sampler2D texture;
 uniform float m_scaleFactor;
-uniform int m_maxIters;
+uniform float m_maxIters;
 uniform vec2 m_center;
 
 void main()
 {
-    vec2 c = (gl_TexCoord[0].xy - 0.5) * m_scaleFactor - m_center;
+    vec2 c = (gl_TexCoord[0].xy - 0.5) / 1.0 * m_scaleFactor - m_center;
     vec2 z = c;
     
-    int iter = 0;
+    float iter = 0.0;
     vec4 output_color;
     do {
-        ++iter;
+        iter += 1.0;
         z = vec2((z.x * z.x - z.y * z.y) + c.x,
                  (z.y * z.x + z.x * z.y) + c.y);
         if ((dot(z, z) > 4.0) || iter > m_maxIters) {
@@ -37,7 +37,7 @@ void main()
     } while (true);
     
     if (iter <= m_maxIters) {
-        float nic = (float(iter) - (log(log(length(z))) / log(2.0))) / float(m_maxIters);
+        float nic = (iter - (log(log(length(z))) / log(2.0))) / m_maxIters;
         float sin_nic = sin(nic);                
         output_color = vec4((0.3 * sin_nic), 
                             (1.0 * sin_nic),
@@ -102,7 +102,7 @@ void Mandelbrot::setMaxIters(unsigned int maxIters)
 {
     m_maxIters = maxIters;
     
-    m_shader.setParameter("m_maxIters", m_maxIters);
+    m_shader.setParameter("m_maxIters", static_cast<float>(m_maxIters));
 }
 
 const sf::Shader & Mandelbrot::getShader() const
