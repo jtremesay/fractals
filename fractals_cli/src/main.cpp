@@ -26,24 +26,16 @@ int main(int argc, char const * argv[])
     blankSprite.setPosition(0, 0);
     blankSprite.setScale(size, size);
     
-    sf::Image renderImage;
-    renderImage.create(size, size);  
-    
     Mandelbrot mandelbrot;
-    mandelbrot.setCenter(sf::Vector2f(0.7f, 0.0f));
-    mandelbrot.setScaleFactor(2.2f);
-    for (unsigned int i = 0; i < 10; ++i) {
+    mandelbrot.setCenter(sf::Vector2f(0.0f, 0.0f));
+    mandelbrot.setScaleFactor(2.0f);
+    for (unsigned int i = 0; i < 1; ++i) {
         renderTexture.clear();
         renderTexture.draw(blankSprite, &mandelbrot.getShader());
         renderTexture.display();
         
         snprintf(nameBuffer, sizeof(nameBuffer), "mandelbrot_gpu_%03u.png", i);
         renderTexture.getTexture().copyToImage().saveToFile(nameBuffer);
-
-              
-        mandelbrot.drawToImage(renderImage);
-        snprintf(nameBuffer, sizeof(nameBuffer), "mandelbrot_cpu_%03u.png", i);
-        renderImage.saveToFile(nameBuffer);
         
         mandelbrot.scale(0.9);
     }

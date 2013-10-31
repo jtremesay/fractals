@@ -26,8 +26,6 @@ public:
     void setMaxIters(unsigned int maxIters);
     
     const sf::Shader & getShader() const;
-    
-    void drawToImage(sf::Image & image) const;
 };
 
 #endif // FRACTALS_MANDELBROT_H
