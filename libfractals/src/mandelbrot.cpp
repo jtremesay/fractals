@@ -30,8 +30,8 @@ void main()
     vec4 output_color;
     do {
         iter += 1.0;
-        z = vec2((z.x * z.x - z.y * z.y) + c.x,
-                 (z.y * z.x + z.x * z.y) + c.y);
+        z = vec2((z.x * z.x - z.y * z.y),
+                 (2.0 * z.x * z.y)) + c;
         if ((dot(z, z) > 4.0) || iter > m_maxIters) {
             break;
         }  
