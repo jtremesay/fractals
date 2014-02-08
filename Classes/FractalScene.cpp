@@ -77,7 +77,8 @@ bool FractalScene::init()
     
     
     // OSD
-    m_osdLabel = LabelTTF::create("", "Arial", 24);
+    m_osdLabel = LabelTTF::create("", "fonts/Marker Felt.ttf", 24);
+    m_osdLabel->setHorizontalAlignment(cocos2d::TextHAlignment::LEFT);
     m_osdLabel->setAnchorPoint(Point(0.f, 1.f));
     m_osdLabel->setPosition(Point(10.f, visibleRect.size.height - 10.f));
     this->addChild(m_osdLabel);
