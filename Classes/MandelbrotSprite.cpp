@@ -1,10 +1,12 @@
 #include "MandelbrotSprite.h"
 
+USING_NS_CC;
 
 MandelbrotSprite::MandelbrotSprite() :
     m_maxIters(64)
 {
     _fragSourceFile = "shaders/mandelbrot.fsh";
+    m_center = Point(0.5f, 0.f);
     m_scaleFactor = 2.f;
 }
 
