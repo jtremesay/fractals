@@ -48,8 +48,7 @@ bool MenuScene::init()
     
     for (size_t i = 0; i < g_fractals_size; ++i)
     {
-        LabelTTF * label = LabelTTF::create(g_fractals[i].fractal_name, "Arial", 24);
-                
+        LabelTTF * label = LabelTTF::create(g_fractals[i].fractal_name, "fonts/Marker Felt.ttf", 24);
         MenuItemLabel * menuItem = MenuItemLabel::create(label, CC_CALLBACK_1(MenuScene::menuCallback, this));
         menuItem->setPosition(Point(VisibleRect::center().x, (VisibleRect::top().y - (i + 1) * LINE_SPACE)));
         
